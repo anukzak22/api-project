@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert User Data</title>
+</head>
+<body>
+    <form action="/insert" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br><br>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email"><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <form action="/upload_json" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Upload JSON File">
+    </form>
+
+    <!-- Button to fetch and display data -->
+    <button onclick="fetchData()">Show Database Content</button>
+
+    <!-- Container to display fetched data -->
+    <div id="dataContainer"></div>
+
+    <script>
+        function fetchData() {
+            fetch('/get_data')
+                .then(response => response.json())
+                .then(data => {
+                    let container = document.getElementById('dataContainer');
+                    container.innerText = JSON.stringify(data, null, 2);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
